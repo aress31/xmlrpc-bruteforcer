@@ -1,6 +1,6 @@
 ![XML-RPC Bruteforce Attacks](images/xmlrpc-bruteforcer_logo.jpg)
 # xmlrpc-bruteforcer
-##Bruteforcing CMS users' passwords via the XMLRPC interface.
+## Bruteforcing CMS users' passwords via the XMLRPC interface.
 
 This script is a PoC for the "Brute Force Amplification Attack" exploit against XMLRPC interfaces enabling the *system.multicall()* method (enabled by default). 
 
