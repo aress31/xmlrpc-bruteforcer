@@ -4,7 +4,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Bruteforcing CMS users' passwords via the XMLRPC interface.
-
 This script is a PoC for the "Brute Force Amplification Attack" exploit against XMLRPC interfaces enabling the *system.multicall()* method (enabled by default). 
 
 The *system.multicall()* method allows multiple calls to be sent within a single HTTP request. Using this "wrapper", malicious attackers can carry out a large number of login attempts (bruteforce) with a minimal network impact, consequently making them stealthier and more efficient.
@@ -44,9 +43,9 @@ The *python3-tqdm* package is required.
 
 <https://pypi.python.org/pypi/tqdm>  
 
-## Future Improvements
-* Debug the tqdm, sys.stdout printing issues.
-* Improve the source code quality.
+## Possible Improvements
+- [ ] Debug the tqdm, sys.stdout printing issues.
+- [ ] Improve the source code quality.
 
 ## License
    Copyright (C) 2016 Alexandre Teyar
