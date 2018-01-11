@@ -17,14 +17,13 @@ More information about the bruteforce amplification attack can be found at:
 ## Vulnerable CMS 
 Script sucessfully tested against WordPress versions **< 4.4**
 
-## Usage
-### Installation
+## Installation
 ```
 $ git clone https://github.com/AresS31/xmlrpc-bruteforcer
 $ cd xmlrpc-bruteforcer
 ```
 
-### Examples:
+## Usage
 ```
 $ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
 [-u]: username of the targeted user, required
