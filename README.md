@@ -18,18 +18,23 @@ More information about the bruteforce amplification attack can be found at:
 Script sucessfully tested against WordPress versions **< 4.4**
 
 ## Usage
-	$ git clone https://github.com/AresS31/xmlrpc-bruteforcer
-	$ cd xmlrpc-bruteforcer
+### Installation
+```
+$ git clone https://github.com/AresS31/xmlrpc-bruteforcer
+$ cd xmlrpc-bruteforcer
+```
 
 ### Examples:
-        $ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
-    [-u]: username of the targeted user, required
-    [-w]: wordlist containing the passwords to try, required
-    [-x]: xmlrpc interface to attack, required
-    [-t]: number of threads to run, optional, default value: 5 
-    [-c]: number of calls to encapsulate within a system.mullticall() call, optional, default value: 1999
-    [-v]: print debugging information, optional, default value: False
-    [-h]: print help
+```
+$ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
+[-u]: username of the targeted user, required
+[-w]: wordlist containing the passwords to try, required
+[-x]: xmlrpc interface to attack, required
+[-t]: number of threads to run, optional, default value: 5 
+[-c]: number of calls to encapsulate within a system.mullticall() call, optional, default value: 1999
+[-v]: print debugging information, optional, default value: False
+[-h]: print help
+```
 
 ## Dependencies
 ### Third-party libraries
