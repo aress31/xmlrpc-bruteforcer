@@ -21,6 +21,14 @@ Script sucessfully tested against WordPress versions **< 4.4**
 ```
 $ git clone https://github.com/AresS31/xmlrpc-bruteforcer
 $ cd xmlrpc-bruteforcer
+$ pip install -r requirements.txt
+```
+
+## Docker
+```
+$ git clone https://github.com/AresS31/xmlrpc-bruteforcer && cd xmlrpc-bruteforcer
+$ docker build -t xmlrpc-bruteforcer .
+$ docker run --rm -v $(pwd):/wordlists xmlrpc-bruteforcer -u admin -w /wordlists/wordlist.txt -t 3 -x https://wordpress.local/xmlrpc.php
 ```
 
 ## Usage
