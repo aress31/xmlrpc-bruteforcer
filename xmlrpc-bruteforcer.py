@@ -139,7 +139,7 @@ def parse_args():
     parser.add_argument("-t", "--thread", dest = "threads_number", help = "number of threads to run", default = 5, type = int)
     parser.add_argument("-u", "--username", dest = "username", help = "username of the targeted user,", required = True)
     parser.add_argument("-v", "--verbose", dest = "verbose", help = "print debugging information", action='store_true') 
-    parser.add_argument("-w", "--wordlist", dest = "wordlist", help = "wordlist containing the passwords", required = True, type = argparse.FileType('r', encoding='latin-1')) 
+    parser.add_argument("-w", "--wordlist", dest = "wordlist", help = "wordlist containing the passwords", required = True, type = argparse.FileType('rb')) 
     parser.add_argument("-x", "--xml-rpc", dest = "xmlrpc_intf", help = "xmlrpc interface to attack", required = True) 
    
     return parser.parse_args()
