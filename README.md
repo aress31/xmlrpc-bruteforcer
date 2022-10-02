@@ -33,7 +33,7 @@ $ docker run --rm -v $(pwd):/wordlists xmlrpc-bruteforcer -u admin -w /wordlists
 
 ## Usage
 ```
-$ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
+$ python3 xmlrpc-bruteforcer.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
 [-u]: username of the targeted user, required
 [-w]: wordlist containing the passwords to try, required
 [-x]: xmlrpc interface to attack, required
