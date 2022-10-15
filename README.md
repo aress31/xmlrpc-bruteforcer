@@ -3,7 +3,7 @@
 <a href="https://www.python.org"><img alt="lang" src="https://img.shields.io/badge/Lang-Python-blue.svg"></a>
 <a href="https://opensource.org/licenses/Apache-2.0"><img alt="license" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"></a>
 
-## Bruteforcing CMS users' passwords via the XMLRPC interface.
+## Bruteforcing `CMS` users' passwords via the `XMLRPC` interface.
 
 This script is a `PoC` for the _Brute Force Amplification Attack_ exploit against `XMLRPC` interfaces enabling the `_system.multicall()_` method (enabled by default).
 
