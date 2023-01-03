@@ -56,7 +56,6 @@ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [th
 
 ## Roadmap
 
-- [ ] Debug the `tqdm` and `sys.stdout` printing issues.
 - [ ] Improve the quality of the source code.
 
 ## Sponsor 💖
