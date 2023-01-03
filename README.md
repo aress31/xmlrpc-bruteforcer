@@ -44,7 +44,7 @@ docker run --rm -v $(pwd):/wordlists xmlrpc-bruteforcer -u admin -w /wordlists/w
 ## Usage
 
 ```bash
-python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
+python3 xmlrpc-bruteforcer.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [threads_number] -c [chunks_size] -v [verbose] -h [help]
 [-u]: username of the targeted user, required
 [-w]: wordlist containing the passwords to try, required
 [-x]: xmlrpc interface to attack, required
@@ -56,7 +56,6 @@ python3 xmlrpc-bruteforce.py -u [username] -w [wordlist] -x [xmlrpc_intf] -t [th
 
 ## Roadmap
 
-- [ ] Debug the `tqdm` and `sys.stdout` printing issues.
 - [ ] Improve the quality of the source code.
 
 ## Sponsor 💖
